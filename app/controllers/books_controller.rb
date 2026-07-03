@@ -33,6 +33,41 @@ class BooksController < ApplicationController
     end
   end
 
+  def search
+    @books = Book.where("title LIKE ?", "%#{params[:query]}%")
+    render json: @books
+  end
+
+  def categories 
+    @categories = Book.all
+    render json: @categories
+  end
+
+  def authors
+    @author = Book.all
+    render json: @author
+  end 
+
+  def category_by_id
+    @categories = Book.find_by(id: params[:id], category: params[:category])
+    render json: @categories
+  end
+
+  def author_by_id
+    @author = Book.find_by(id: params[:id], author: params[:author])
+    render json: @author
+  end
+
+  def long_books
+    @long_books = Book.where("pages > ?", 300)
+    render json: @long_books
+  end
+
+  def short_books
+    @short_books = Book.where("pages < ?", 100)
+    render json: @short_books
+  end
+
   # DELETE /books/1
   def destroy
     @book.destroy!

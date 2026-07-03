@@ -13,6 +13,26 @@ class ReadingsController < ApplicationController
     render json: @reading
   end
 
+  def reading_now
+    @reading = Reading.find_by(status: "reading")
+    render json: @reading
+   end
+  
+  def current_reading
+    @reading = Reading.find_by(id: params[:id], status: "reading")
+    render json: @reading
+  end
+
+  def reading_finished
+    @reading = Reading.where(status: "finished")
+    render json: @reading
+  end
+
+  def finished_reading
+    @reading = Reading.find_by(id: params[:id], status: "finished")
+    render json: @reading
+  end
+
   # POST /readings
   def create
     @reading = Reading.new(reading_params)
